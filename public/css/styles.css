@@ -1,0 +1,305 @@
+/* visual styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --main-bg-color: white;
+  --alt-bg-color: teal;
+  --accent-color: blue;
+  --border-color: black;
+}
+
+img { border: 1px solid var(--border-color); }
+
+body { font-family: 'Signika', sans-serif; }
+
+body > footer { border-top: 1px solid var(--border-color); }
+
+a.button, button {
+    font-family: 'Signika', sans-serif;
+    color: var(--accent-color)
+	background-color: inerit !important;
+}
+
+body > section:nth-child(3){
+    background-color: var(--alt-bg-color);
+}
+
+
+div.card {
+    display: grid;
+	grid-template-areas:
+	"header header"
+	"logo content"
+	"footer footer";
+    background-color: var(--main-bg-color);
+    border: 1px solid var(--border_color);
+	gap: 1rem;
+    margin: 1rem;
+}
+
+div.card header h2 { margin: 0; padding: 0; }
+div.card footer { grid-area: footer; }
+div.card header { grid-area: header; }
+div.card .content { grid-area: content; padding: 0 1ex;}
+div.card .logo { grid-area: logo; }
+div.card .content dt::after, fieldset label::after { content: ": "; }
+div.card .content dl {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+}
+
+fieldset { display: flex; flex-flow: column wrap; gap: 1ex;}
+div.card .content fieldset.checklist { flex-flow: row wrap;  }
+div.card .content fieldset.checklist label { flex-basis: 60%; }
+div.card .content fieldset.checklist input { flex-basis: unset; }
+
+
+div.card .content dt, fieldset label { margin: 0; padding: 0;  flex: 0; font-weight: bold }
+div.card .content dd, fieldset input  { margin: 0; padding: 0; flex: 80%; text-align: right;}
+fieldset input { text-align: left; }
+
+select {appearance: textfield;  border: 1px solid black; background-color: inherit; }
+.no_border { border: inherit !important }
+
+section.cards {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+    align-items: center;
+}
+
+/* structural styles */
+body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body > section {
+    width: 100%;
+    padding: 1rem;
+}
+
+@media (max-width: 700px) { }
+
+section > header { grid-area: header; }
+section > footer { grid-area: footer; }
+
+div.cards {
+    grid-area: cards;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+div.carousel {
+    grid-area: images;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: space-around;
+ }
+
+div.carousel p { font-size: 80% }
+
+p.caption {
+    font-size: 80%;
+    margin-top: 0px;
+}
+
+div.card {
+	width: clamp(min(10vw, 50ch), 80vw, max(30vw, 50ch));
+    padding: clamp(min(1vw, 1ch), 1ch, max(5vw, 1ch));
+    font-weight: 300;
+    border-radius: 10px;
+}
+
+
+a.button {
+	text-decoration: none;
+	display: flex;
+	justify-content: center;
+	min-width: 44px;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+a.button:link, a.button:visited, a.button:hover {
+
+}
+
+a.button, button {
+  font: inherit;
+  font-family: 'Signika', Helvetica, serif;
+  font-weight: 700;
+  padding: 0.6ex 2ex;
+  border: 1px solid;
+  border-radius: 5px;
+  min-height: 44px;
+  box-shadow: 0 2px 4px 0 grey,0 5px 15px 0 silver;
+  cursor: pointer;
+  background-color: inherit;
+}
+
+a.button.ghost, button.ghost {
+  background-color: inherit;
+  font: inherit;
+  font-size: 90%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: inherit;
+  min-height: inherit;
+  box-shadow: inherit;
+}
+
+div.button-set { align-self: start }
+
+a.button.ghost::after, button.ghost::after {
+  content: ' →'
+}
+
+a.stub, a.button.stub, button.stub, a.button.ghost.stub, button.ghost.stub { color: grey }
+a.button.ghost.stub::after, button.ghost.stub::after {
+	content: '';
+}
+
+
+
+header {
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 { font-size: 325%; }
+h2 { font-size: 250%; }
+
+body > header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+body > footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.menu > li {
+    margin: 0 1rem;
+    overflow: hidden;
+}
+
+.menu-button-container {
+    display: none;
+    height: 100%;
+    width: 30px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#menu-toggle { display: none; }
+
+.menu-button,
+.menu-button::before,
+.menu-button::after {
+    display: block;
+    background-color: var(--accent-color);
+    position: absolute;
+    height: 4px;
+    width: 30px;
+    transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 2px;
+}
+
+.menu-button::before {
+    content: "";
+    margin-top: -8px;
+}
+
+.menu-button::after {
+    content: "";
+    margin-top: 8px;
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::before {
+    margin-top: 0px;
+    transform: rotate(405deg);
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button {
+    background: rgba(255, 255, 255, 0);
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::after {
+    margin-top: 0px;
+    transform: rotate(-405deg);
+}
+
+@media (max-width: 700px) {
+    .menu-button-container {
+        display: flex;
+    }
+
+    .menu {
+        position: absolute;
+        top: 0;
+        margin-top: 50px;
+        left: 0;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #menu-toggle ~ .menu li {
+        height: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    #menu-toggle:checked ~ .menu li {
+        height: 2.5em;
+        padding: 0.5em;
+        transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .menu > li {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0.5em 0;
+        width: 100%;
+        color: white;
+        background-color: inherit;
+    }
+
+    .menu > li:not(:last-child) {
+        border-bottom: 1px solid #444;
+    }
+}
+
+
