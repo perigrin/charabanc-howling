@@ -845,6 +845,21 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 6.17
       perl 5.006001
+  ExtUtils-CChecker-0.11
+    pathname: P/PE/PEVANS/ExtUtils-CChecker-0.11.tar.gz
+    provides:
+      ExtUtils::CChecker 0.11
+    requirements:
+      ExtUtils::CBuilder 0
+      Module::Build 0.4004
+  Feature-Compat-Class-0.06
+    pathname: P/PE/PEVANS/Feature-Compat-Class-0.06.tar.gz
+    provides:
+      Feature::Compat::Class 0.06
+    requirements:
+      Module::Build 0.4004
+      Object::Pad 0.78
+      perl 5.014
   File-ShareDir-1.118
     pathname: R/RE/REHSACK/File-ShareDir-1.118.tar.gz
     provides:
@@ -1232,6 +1247,24 @@ DISTRIBUTIONS
       Text::Wrap 0
       constant 0
       perl 5.008001
+  Object-Pad-0.802
+    pathname: P/PE/PEVANS/Object-Pad-0.802.tar.gz
+    provides:
+      Object::Pad 0.802
+      Object::Pad::ExtensionBuilder 0.802
+      Object::Pad::MOP::Class 0.802
+      Object::Pad::MOP::Field 0.802
+      Object::Pad::MOP::FieldAttr 0.802
+      Object::Pad::MOP::Method 0.802
+      Object::Pad::MetaFunctions 0.802
+    requirements:
+      ExtUtils::CBuilder 0
+      Module::Build 0.4004
+      XS::Parse::Keyword 0.37
+      XS::Parse::Keyword::Builder 0.37
+      XS::Parse::Sublike 0.15
+      XS::Parse::Sublike::Builder 0.15
+      perl 5.018
   Package-Stash-0.40
     pathname: E/ET/ETHER/Package-Stash-0.40.tar.gz
     provides:
@@ -1796,6 +1829,29 @@ DISTRIBUTIONS
       base 0
       lib 0
       perl 5.008
+  XS-Parse-Keyword-0.38
+    pathname: P/PE/PEVANS/XS-Parse-Keyword-0.38.tar.gz
+    provides:
+      XS::Parse::Infix 0.38
+      XS::Parse::Infix::Builder 0.38
+      XS::Parse::Keyword 0.38
+      XS::Parse::Keyword::Builder 0.38
+    requirements:
+      ExtUtils::CBuilder 0
+      ExtUtils::CChecker 0.11
+      ExtUtils::ParseXS 3.16
+      Module::Build 0.4004
+      perl 5.014
+  XS-Parse-Sublike-0.20
+    pathname: P/PE/PEVANS/XS-Parse-Sublike-0.20.tar.gz
+    provides:
+      Sublike::Extended 0.20
+      XS::Parse::Sublike 0.20
+      XS::Parse::Sublike::Builder 0.20
+    requirements:
+      ExtUtils::CBuilder 0
+      Module::Build 0.4004
+      perl 5.016
   XString-0.005
     pathname: A/AT/ATOOMIC/XString-0.005.tar.gz
     provides:

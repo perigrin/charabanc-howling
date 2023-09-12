@@ -38,8 +38,16 @@ div.card {
     margin: 1rem;
 }
 
+div.card.nologo {
+	grid-template-areas:
+	"header"
+	"content"
+	"footer";
+
+}
+
 div.card header h2 { margin: 0; padding: 0; }
-div.card footer { grid-area: footer; }
+div.card footer { grid-area: footer; display: flex; }
 div.card header { grid-area: header; }
 div.card .content { grid-area: content; padding: 0 1ex;}
 div.card .logo { grid-area: logo; }
@@ -166,8 +174,6 @@ a.button.ghost.stub::after, button.ghost.stub::after {
 	content: '';
 }
 
-
-
 header {
     margin: 0px;
     padding: 0px;
@@ -176,7 +182,7 @@ header {
 h1 { font-size: 325%; }
 h2 { font-size: 250%; }
 
-body > header {
+header {
     display: flex;
     width: 100%;
     justify-content: space-between;

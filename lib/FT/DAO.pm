@@ -1,12 +1,11 @@
-use 5.38.0;
-use experimental 'class';
+use Feature::Compat::Class;
 
 package FT::Data {
     my sub fetch_http_data {
         my $r = HTTP::Tiny->new()->get( $ENV{FT_DATA_URL} );
         unless ( $r->{success} ) {
             die sprintf "Failed to get data from %s: %s %s",
-              $ENV{TRUCK_DATA_URL}, $r->{status}, $r->{reason};
+              $ENV{FT_DATA_URL}, $r->{status}, $r->{reason};
         }
         return $r->{content};
     }
@@ -38,6 +37,7 @@ class FT::DAO {
             {
                 AutoCommit                 => 1,
                 RaiseError                 => 1,
+                PrintError                 => 1,
                 sqlite_see_if_its_a_number => 1,
             }
         );
@@ -48,7 +48,9 @@ class FT::DAO {
     method ping { $dbh->ping; }
 
     method create_db {
+
         # TODO replace with a call to App::Sqitch directly
+        warn "Creating database: $db";
         system( 'sqitch', 'deploy', "db:sqlite:$db" );
     }
 
@@ -57,12 +59,16 @@ class FT::DAO {
     }
 
     method load_data () {
+
+        warn "Loading database: $db";
         my $csv = FT::Data->fetch();
+        die "No data" unless $csv;
+
         my $sth = $dbh->prepare(
             q{
             INSERT INTO food_trucks (
                 address, applicant, approved, block, blocklot, cnn, dayshours, expiration_date,
-                facility_type, fire_prevention_districts, foodItems, latitude, location,
+                facility_type, fire_prevention_districts, food_items, latitude, location,
                 location_description, locationid, longitude, lot, neighborhoods, NOISent, permit,
                 police_districts, prior_permit, received, schedule, status, supervisor_districts,
                 x, y, zip_codes
@@ -72,7 +78,6 @@ class FT::DAO {
             )
         }
         );
-
         for my $row ( csv( in => \$csv, headers => 'auto' )->@* ) {
             $sth->execute(
                 $row->@{
@@ -95,4 +100,87 @@ class FT::DAO {
             );
         }
     }
+
+    method list_food_trucks() {
+        $dbh->selectall_arrayref( 'SELECT * FROM food_trucks',
+            { Slice => {} } );
+    }
+
+    method add_food_truck ($truck) {
+        my $sth = $dbh->prepare( q{
+            INSERT INTO food_trucks (
+                address, applicant, food_items, location_description, locationid
+            ) VALUES (?, ?, ?, ?, ?)
+        });
+
+        $sth->execute(
+            $truck->@{
+                'address',    'applicant',
+                'food_items', 'location_description',
+                'locationid'
+            }
+        );
+
+        my ($new) = $dbh->selectall_array(
+            q{
+                SELECT * FROM food_trucks WHERE id = ?
+            },
+            { Slice => {} },
+            $dbh->sqlite_last_insert_rowid()
+        );
+        return $new;
+    }
+
+    method add_order ($order) {
+        my $sth = $dbh->prepare(
+            q{
+            INSERT INTO orders (person, phone, drop_off, truck_id, food_order )
+                        VALUES (?, ?, ?, ?, ?)
+
+        }
+        );
+
+        $sth->execute(
+            $order->@{ 'name', 'phone', 'drop_off', 'truck_id', 'food_order' }
+        );
+
+        my ($new) = $dbh->selectall_array(
+            q{
+                SELECT *
+                  FROM orders o
+                INNER JOIN food_trucks t ON o.truck_id = t.locationid
+                WHERE o.id = ?
+            },
+            { Slice => {} },
+            $dbh->sqlite_last_insert_rowid()
+        );
+        return $new;
+    }
+
+    method list_pending_orders() {
+        $dbh->selectall_arrayref(
+            q{
+                SELECT *
+                  FROM orders o
+                INNER JOIN food_trucks t ON o.truck_id = t.locationid
+                WHERE NOT o.delivered
+            },
+            { Slice => {} }
+        );
+    }
+
+    method mark_order_delivered ($id) {
+        my $sth = $dbh->prepare(
+            q{
+            UPDATE orders
+               SET delivered = TRUE,
+                   delivered_at = datetime()
+             WHERE id = ?
+        }
+        );
+        $sth->execute($id);
+    }
 }
+
+1;
+__END__

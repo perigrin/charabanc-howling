@@ -5,3 +5,4 @@ requires "Text::CSV_XS";
 requires 'IO::Socket::SSL';
 requires 'Mojolicious';
 requires 'Mojolicious::Plugin::HTMX';
+requires 'Feature::Compat::Class';

@@ -3,7 +3,8 @@
 BEGIN;
 
 CREATE TABLE food_trucks (
-    locationid INT PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
+    locationid INT,
     applicant TEXT,
     facility_type TEXT,
     cnn INT,
@@ -14,7 +15,7 @@ CREATE TABLE food_trucks (
     lot INT,
     permit TEXT,
     status TEXT,
-    foodItems TEXT,
+    food_items TEXT,
     x TEXT,
     y TEXT,
     latitude TEXT,
