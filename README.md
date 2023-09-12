@@ -1,6 +1,6 @@
 # Charabanc Howling
 
-This is a solution to the Estee Lauder coding challenge.
+This is a solution to a coding challenge.
 
 ## SYNOPSIS
 
